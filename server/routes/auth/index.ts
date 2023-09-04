@@ -12,5 +12,9 @@ export default {
       PUT: auth.update,
       DELETE: auth.deleteById,
     },
+    {
+      path: "login",
+      POST: auth.login,
+    },
   ],
 };
