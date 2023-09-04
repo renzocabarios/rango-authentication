@@ -1,19 +1,16 @@
-// Import RangoJS
 import rango from "rango";
+import connect from "./db";
+import { Router } from "rango/lib/app";
+import addMiddleWares from "./middlewares";
+import addRoutes from "./routes";
+import { PORT } from "./env";
 
-// Create an instance of the RangoJS app
-const app = rango();
+const app: Router = rango();
 
-// Define a route for the home page
-app.add({
-  path: "",
-  GET: () => {
-    return "Hello, RangoJS!";
-  },
-});
+addMiddleWares(app);
+addRoutes(app);
 
-// Start the server
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+  connect();
 });
