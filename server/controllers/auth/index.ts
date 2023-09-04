@@ -1,6 +1,25 @@
 import { Context } from "rango";
-import { auth } from "../../services";
+import { auth, users } from "../../services";
 import { IAuth } from "../../interfaces/model";
+import { ILoginUser } from "../../interfaces/dto";
+import bcrypt from "bcrypt";
+
+async function login(context: Context): Promise<any> {
+  try {
+    const payload = context.body as ILoginUser;
+    const user = await users.getByEmail(payload.email);
+
+    if (!user) {
+      return context.res.json({ data: [], status: "fail" });
+    }
+    if (!(await bcrypt.compare(payload.password, user.password))) {
+      return context.res.json({ data: [], status: "fail" });
+    }
+    return context.res.json({ data: [], status: "success" });
+  } catch (err: any) {
+    return context.res.status(500).json({ error: err.message });
+  }
+}
 
 async function getAll(context: Context): Promise<any> {
   try {
@@ -53,4 +72,4 @@ async function deleteById(context: Context): Promise<any> {
   }
 }
 
-export default { getAll, getById, create, update, deleteById };
+export default { login, getAll, getById, create, update, deleteById };
