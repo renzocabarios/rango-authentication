@@ -5,12 +5,16 @@ async function getAll() {
   return await users.find({ deleted: false });
 }
 
-async function create(body: IUser) {
-  return await users.create(body);
-}
-
 async function getById(_id: string) {
   return await users.findOne({ _id, deleted: false });
+}
+
+async function getByEmail(email: string) {
+  return await users.findOne({ email, deleted: false });
+}
+
+async function create(body: IUser) {
+  return await users.create(body);
 }
 
 async function update(_id: string, body: IUser) {
@@ -24,4 +28,4 @@ async function deleteById(_id: string) {
   );
 }
 
-export default { getAll, create, getById, update, deleteById };
+export default { getByEmail, getAll, create, getById, update, deleteById };
