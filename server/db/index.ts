@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { ConnectOptions } from "mongoose";
 import { MONGODB_URI } from "../env";
 
-const dbOptions = {};
+const options: ConnectOptions = { useNewUrlParser: true };
 
 const connect = () => {
   mongoose
-    .connect(MONGODB_URI, dbOptions)
+    .connect(MONGODB_URI, options)
     .then(() => console.log("Database connected!"))
     .catch((err: any) => console.log(err));
 };
